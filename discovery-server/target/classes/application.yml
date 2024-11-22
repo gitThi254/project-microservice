@@ -12,3 +12,7 @@ app:
   eureka:
     username: eureka
     password: password
+management:
+  tracing:
+    sampling:
+      probability: 1.0
