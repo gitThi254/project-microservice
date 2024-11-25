@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: api-gateway
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8181/realms/micro-services
+  cloud:
+    gateway:
+      routes:
+        - id: order-service
+          uri: lb://order-service
+          predicates:
+            - Path=/api/order/**
+        - id: product-service
+          uri: lb://product-service
+          predicates:
+            - Path=/api/product/**
+        - id: inventory-service
+          uri: lb://inventory-service
+          predicates:
+            - Path=/api/inventory/**
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka:password@localhost:8761/eureka
+  instance:
+    hostname: localhost
+management:
+  tracing:
+    sampling:
+      probability: 1.0
